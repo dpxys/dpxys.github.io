@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NCTI --By Xi</title>
+    <title>NCTI 神经-计算机人格测试</title>
     <style>
         * {
             box-sizing: border-box;
@@ -204,10 +204,10 @@
             background: linear-gradient(135deg, #dbeafe, #ede9fe);
             border-radius: 20px;
             padding: 24px 28px;
-            margin-top: 20px;
+            margin-bottom: 24px;
         }
         .personality-code {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: #1e293b;
         }
@@ -256,7 +256,7 @@
 <div class="container">
     <h1>🧠 NCTI 人格测试</h1>
     <div class="subhead">
-        Nerve Computer Type Indicator · 共35题 · 编者:Xi
+        Nerve-Computer Type Indicator· 共35题 · By Xi
     </div>
 
     <div id="questions-container"></div>
@@ -268,15 +268,17 @@
     <div id="error-msg" class="error-msg"></div>
 
     <div id="result-area">
-        <div class="result-block">
-            <div class="result-title">📊 各维度倾向</div>
-            <div id="dimension-results"></div>
-        </div>
         <div class="personality-box" id="personality-box">
             <div class="personality-code" id="result-code"></div>
             <div class="personality-name" id="result-name"></div>
             <div class="personality-desc" id="result-desc"></div>
         </div>
+
+        <div class="result-block">
+            <div class="result-title">📊 各维度倾向百分比</div>
+            <div id="dimension-results"></div>
+        </div>
+
         <div class="footnote">—— 结果基于你的选择生成，仅供参考 ——</div>
     </div>
 </div>
@@ -396,7 +398,26 @@
         ]}
     ];
 
-    // ========== 32型人格数据（所有描述均使用模板字符串，引号安全） ==========
+    // ========== 维度标签及计算机部件名称 ==========
+    // 第2维度右端从“存储”改为“Storage”
+    const dimLabels = [
+        { left: "简洁", right: "多维", leftPart: "CPU", rightPart: "GPU" },
+        { left: "灵动", right: "持久", leftPart: "RAM", rightPart: "Storage" },
+        { left: "外排", right: "内驱", leftPart: "Fan", rightPart: "Heatpipe" },
+        { left: "全面", right: "精巧", leftPart: "Bus", rightPart: "Terminal" },
+        { left: "饱满", right: "节能", leftPart: "Voltage", rightPart: "Eco" }
+    ];
+
+    // 字母代码（用于人格类型缩写）
+    const dimLetters = [
+        { left: "C", right: "G" },
+        { left: "R", right: "S" },
+        { left: "F", right: "H" },
+        { left: "B", right: "T" },
+        { left: "V", right: "E" }
+    ];
+
+    // ========== 32型人格数据 ==========
     const typeData = {
         "简洁-灵动-外排-全面-饱满": {
             code: "急先锋",
@@ -624,15 +645,6 @@
         }
     };
 
-    // 维度标签
-    const dimLabels = [
-        { left: "简洁", right: "多维", leftShort: "简", rightShort: "多" },
-        { left: "灵动", right: "持久", leftShort: "灵", rightShort: "持" },
-        { left: "外排", right: "内驱", leftShort: "外", rightShort: "内" },
-        { left: "全面", right: "精巧", leftShort: "全", rightShort: "精" },
-        { left: "饱满", right: "节能", leftShort: "饱", rightShort: "节" }
-    ];
-
     // ========== 渲染题目 ==========
     function renderQuestions() {
         const container = document.getElementById('questions-container');
@@ -640,7 +652,9 @@
         for (let d = 1; d <= 5; d++) {
             const qs = questions.filter(q => q.dim === d);
             const label = dimLabels[d-1];
-            html += `<div class="question-group"><div class="dimension-tag">维度 ${d}：${label.left} ↔ ${label.right}</div>`;
+            const leftTag = `${label.left} (${label.leftPart})`;
+            const rightTag = `${label.right} (${label.rightPart})`;
+            html += `<div class="question-group"><div class="dimension-tag">维度 ${d}：${leftTag} ↔ ${rightTag}</div>`;
             qs.forEach(q => {
                 const id = 'q' + q.id;
                 html += `<div class="q-item"><span class="q-text">${q.id}. ${q.text}</span><div class="q-options">`;
@@ -688,7 +702,7 @@
             const checked = document.querySelector(`input[name="${name}"]:checked`);
             if (checked) {
                 const score = parseInt(checked.value);
-                dimScores[q.dim] += score;
+                dimScores[q.dim - 1] += score;
             }
         });
 
@@ -700,35 +714,67 @@
         const resultArea = document.getElementById('result-area');
         resultArea.style.display = 'block';
 
-        const dimResults = document.getElementById('dimension-results');
-        let html = '';
-        const maxScore = 35;
-        const chosen = [];
+        const maxScore = 70;
+        const chosen = [];        // 中文全称
+        const letterCode = [];    // 字母代码
+        const pcts = [];
 
         for (let i = 0; i < 5; i++) {
-            const s = scores[i+1];
+            const s = scores[i];
             const label = dimLabels[i];
+            const letters = dimLetters[i];
             let leftPct = 0, rightPct = 0;
             if (s > 0) {
-                rightPct = (s / maxScore) * 100;
+                rightPct = ((s+35) / maxScore) * 100;
                 leftPct = 100 - rightPct;
                 chosen.push(label.right);
+                letterCode.push(letters.right);
             } else if (s < 0) {
-                leftPct = (Math.abs(s) / maxScore) * 100;
+                leftPct = ((Math.abs(s)+35) / maxScore) * 100;
                 rightPct = 100 - leftPct;
                 chosen.push(label.left);
+                letterCode.push(letters.left);
             } else {
                 leftPct = 50;
                 rightPct = 50;
                 chosen.push(label.left);
+                letterCode.push(letters.left);
             }
             leftPct = Math.round(leftPct * 10) / 10;
             rightPct = Math.round(rightPct * 10) / 10;
+            pcts.push({ leftPct, rightPct, score: s });
+        }
 
+        // 1. 人格类型
+        const typeKey = chosen.join('-');
+        const typeInfo = typeData[typeKey];
+        const codeStr = letterCode.slice(0,4).join('') + '-' + letterCode[4];
+        const codeDisplay = typeKey.replace(/-/g, ' · ') + '  (' + codeStr + ')';
+
+        if (typeInfo) {
+            document.getElementById('result-code').textContent = codeDisplay;
+            document.getElementById('result-name').textContent = typeInfo.code;
+            document.getElementById('result-desc').textContent = typeInfo.desc;
+        } else {
+            document.getElementById('result-code').textContent = codeDisplay;
+            document.getElementById('result-name').textContent = '均衡型（维度倾向不显著）';
+            document.getElementById('result-desc').textContent = '你的各项维度倾向较为均衡，可能在不同情境下表现出不同的特质。建议结合具体情境进一步探索。';
+        }
+
+        // 2. 维度倾向（加入部件名称）
+        const dimResults = document.getElementById('dimension-results');
+        let html = '';
+        for (let i = 0; i < 5; i++) {
+            const s = pcts[i].score;
+            const leftPct = pcts[i].leftPct;
+            const rightPct = pcts[i].rightPct;
+            const label = dimLabels[i];
+            const leftLabel = `${label.left} (${label.leftPart})`;
+            const rightLabel = `${label.right} (${label.rightPart})`;
             html += `<div class="dimension-result">
                 <div class="dim-label">
-                    <span class="left">${label.left} ${leftPct}%</span>
-                    <span class="right">${label.right} ${rightPct}%</span>
+                    <span class="left">${leftLabel} ${leftPct}%</span>
+                    <span class="right">${rightLabel} ${rightPct}%</span>
                 </div>
                 <div class="bar-bg">
                     <div class="bar-fill-left" style="width: ${leftPct}%;"></div>
@@ -739,19 +785,6 @@
             </div>`;
         }
         dimResults.innerHTML = html;
-
-        const typeKey = chosen.join('-');
-        const typeInfo = typeData[typeKey];
-
-        if (typeInfo) {
-            document.getElementById('result-code').textContent = typeKey.replace(/-/g, ' · ');
-            document.getElementById('result-name').textContent = typeInfo.code;
-            document.getElementById('result-desc').textContent = typeInfo.desc;
-        } else {
-            document.getElementById('result-code').textContent = typeKey.replace(/-/g, ' · ');
-            document.getElementById('result-name').textContent = '均衡型（多维倾向不显著）';
-            document.getElementById('result-desc').textContent = '你的各项维度倾向较为均衡，可能在不同情境下表现出不同的特质。建议结合具体情境进一步探索。';
-        }
 
         resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
