@@ -1,483 +1,770 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>胤语 · 江海不言 润物无声 · 蓝色卡通</title>
-<style>
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-body {
-	background: linear-gradient(145deg, #b3d9ff, #7bb8e6, #4a9ed6);
-	min-height: 100vh;
-	font-family: 'Comic Sans MS', 'Chalkboard SE', 'Georgia', '宋体', cursive, sans-serif;
-	padding: 2rem 1.5rem;
-	color: #1e3c5a;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	position: relative;
-	overflow-x: hidden;
-}
-
-/* 卡通云朵装饰（静态） */
-body::before {
-	content: "☁️☁️☁️";
-	position: absolute;
-	top: 20px;
-	left: 10px;
-	font-size: 3.5rem;
-	opacity: 0.2;
-	white-space: nowrap;
-	transform: rotate(-5deg);
-	pointer-events: none;
-}
-
-body::after {
-	content: "⭐ 🌟 ⭐";
-	position: absolute;
-	bottom: 40px;
-	right: 20px;
-	font-size: 2.8rem;
-	opacity: 0.15;
-	transform: rotate(10deg);
-	pointer-events: none;
-}
-
-.book {
-	max-width: 820px;
-	width: 100%;
-	background: rgba(255, 255, 255, 0.88);
-	backdrop-filter: blur(4px);
-	border-radius: 60px 20px 60px 20px;
-	box-shadow: 0 20px 40px rgba(0, 60, 120, 0.25), 0 8px 16px rgba(0, 0, 0, 0.08);
-	padding: 2.5rem 2.2rem;
-	position: relative;
-	border: 3px solid #ffffff;
-	transition: box-shadow 0.3s;
-}
-
-/* 卡通装饰角（静态） */
-.book::before {
-	content: "📚";
-	position: absolute;
-	top: -10px;
-	left: -10px;
-	font-size: 3.2rem;
-	opacity: 0.5;
-	transform: rotate(-20deg);
-	pointer-events: none;
-}
-
-.book::after {
-	content: "🦄";
-	position: absolute;
-	bottom: -8px;
-	right: -8px;
-	font-size: 3rem;
-	opacity: 0.3;
-	transform: rotate(15deg);
-	pointer-events: none;
-}
-
-hr {
-	border: none;
-	border-top: 3px dashed #6aaed9;
-	margin: 1.8rem 0;
-	opacity: 0.6;
-}
-
-.divider-wave {
-	text-align: center;
-	color: #4a8bb0;
-	font-size: 1.8rem;
-	letter-spacing: 12px;
-	margin: 1.6rem 0;
-	opacity: 0.8;
-	text-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-h1 {
-	font-size: 2.8rem;
-	font-weight: 700;
-	letter-spacing: 12px;
-	text-align: center;
-	margin-top: 0.2rem;
-	margin-bottom: 0.2rem;
-	font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
-	background: linear-gradient(135deg, #1f6b9e, #4a9ed6, #7fc1f0);
-	background-size: 200% 200%;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-position: 0% 50%;
-	text-shadow: 0 4px 12px rgba(30, 100, 180, 0.15);
-}
-
-.subhead {
-	text-align: center;
-	font-size: 1.2rem;
-	color: #2c6b8f;
-	letter-spacing: 8px;
-	margin-top: -0.2rem;
-	margin-bottom: 1.8rem;
-	border-bottom: 3px dashed #89c2e6;
-	padding-bottom: 1.2rem;
-	font-style: italic;
-	opacity: 0.9;
-}
-
-/* 代序 */
-.preface {
-	background: rgba(230, 245, 255, 0.7);
-	backdrop-filter: blur(2px);
-	padding: 1.8rem 2rem;
-	border-radius: 50px 12px 50px 12px;
-	margin-bottom: 2rem;
-	box-shadow: 0 6px 12px rgba(0, 50, 100, 0.08);
-	border: 3px solid #b3d9ff;
-	transition: border-color 0.6s, background 0.6s;
-}
-
-.preface p {
-	line-height: 1.9;
-	font-size: 1rem;
-	text-indent: 2em;
-	margin-bottom: 0.8rem;
-	color: #1f4460;
-}
-
-.preface .signature {
-	text-align: right;
-	font-size: 1rem;
-	color: #2c6b8f;
-	margin-top: 0.6rem;
-	text-indent: 0;
-	letter-spacing: 2px;
-	font-weight: 600;
-}
-
-/* 语录卡片 */
-.section {
-	margin: 2.2rem 0 1.8rem 0;
-}
-
-.section-title {
-	display: flex;
-	align-items: baseline;
-	gap: 12px;
-	border-bottom: 4px solid #89c2e6;
-	padding-bottom: 0.4rem;
-	margin-bottom: 1.4rem;
-	transition: border-color 0.3s;
-}
-
-.section-title h2 {
-	font-weight: 700;
-	font-size: 2rem;
-	letter-spacing: 10px;
-	font-family: 'Comic Sans MS', cursive;
-	background: linear-gradient(135deg, #1f6b9e, #4a9ed6);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-position: 0% 50%;
-}
-
-.section-title .sub {
-	font-size: 0.9rem;
-	color: #3d7ea6;
-	letter-spacing: 3px;
-	margin-left: 6px;
-	font-weight: 600;
-}
-
-.quote-grid {
-	display: flex;
-	flex-direction: column;
-	gap: 0.8rem;
-}
-
-.quote-item {
-	padding: 0.7rem 1.5rem;
-	border-left: 6px solid #89c2e6;
-	background: rgba(255, 255, 255, 0.6);
-	backdrop-filter: blur(1px);
-	border-radius: 30px 10px 30px 10px;
-	transition: background 0.3s, border-color 0.3s;
-	font-size: 1rem;
-	line-height: 1.7;
-	box-shadow: 0 2px 6px rgba(0, 60, 120, 0.05);
-}
-
-.quote-item .tag {
-	display: inline-block;
-	background: linear-gradient(135deg, #4a9ed6, #2d7aa0);
-	color: #ffffff;
-	font-size: 0.95rem;
-	font-weight: 700;
-	padding: 0.2rem 1.2rem;
-	border-radius: 40px;
-	margin-right: 10px;
-	letter-spacing: 1px;
-	box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-	text-shadow: 0 1px 2px rgba(0,0,0,0.15);
-	border: 1px solid rgba(255,255,255,0.3);
-}
-
-.quote-item .highlight {
-	background: #b8ddf5;
-	padding: 0.1rem 0.5rem;
-	border-radius: 20px;
-	color: #1f5a7a;
-	font-weight: 600;
-}
-
-.quote-block {
-	background: rgba(225, 242, 255, 0.7);
-	backdrop-filter: blur(2px);
-	padding: 1.2rem 2rem;
-	border-radius: 40px 8px 40px 8px;
-	margin: 0.8rem 0;
-	border: 3px solid #b3d9ff;
-	transition: background 0.3s, border-color 0.3s;
-}
-
-.quote-block p {
-	text-indent: 2em;
-	line-height: 1.9;
-	margin: 0.3rem 0;
-	color: #1f4460;
-}
-
-.quote-block .source {
-	text-align: right;
-	font-size: 0.9rem;
-	color: #3d7ea6;
-	margin-top: 0.6rem;
-	text-indent: 0;
-	font-weight: 600;
-}
-
-.footer-note {
-	background: rgba(220, 240, 255, 0.7);
-	backdrop-filter: blur(2px);
-	padding: 1.8rem 2rem;
-	border-radius: 50px 10px 50px 10px;
-	margin: 2rem 0 0.8rem 0;
-	border: 3px solid #b3d9ff;
-	box-shadow: 0 6px 12px rgba(0, 50, 100, 0.08);
-	transition: background 0.3s, border-color 0.3s;
-}
-
-.footer-note p {
-	line-height: 2;
-	text-indent: 2em;
-	font-size: 1rem;
-	color: #1f4460;
-}
-
-.footer-note .signature-block {
-	margin-top: 1rem;
-	text-align: right;
-	font-size: 1rem;
-	color: #1f5a7a;
-	letter-spacing: 2px;
-	text-indent: 0;
-	font-weight: 600;
-}
-
-.signature-block small {
-	display: block;
-	color: #3d7ea6;
-	font-size: 0.85rem;
-	letter-spacing: 2px;
-	font-weight: normal;
-}
-
-.meta-date {
-	text-align: right;
-	color: #2c6b8f;
-	font-size: 0.9rem;
-	margin-top: 1.6rem;
-	border-top: 3px dashed #89c2e6;
-	padding-top: 1rem;
-	letter-spacing: 2px;
-	opacity: 0.85;
-}
-
-/* 编者 Xi 卡通风（静态） */
-.editor-seal {
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	gap: 14px;
-	margin-top: 0.8rem;
-	margin-bottom: 0.2rem;
-	flex-wrap: wrap;
-}
-
-.seal-stamp {
-	background: linear-gradient(135deg, #4a9ed6, #2d7aa0);
-	color: #ffffff;
-	font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
-	font-size: 1.6rem;
-	font-weight: 700;
-	letter-spacing: 2px;
-	padding: 0.2rem 1.8rem;
-	border-radius: 60px 8px 60px 8px;
-	border: 3px solid #ffffff;
-	box-shadow: 0 4px 12px rgba(0, 60, 120, 0.25);
-	display: inline-block;
-	text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.seal-stamp i {
-	font-style: normal;
-	font-weight: 300;
-	margin: 0 2px;
-}
-
-.editor-line {
-	font-size: 1.1rem;
-	color: #1f5a7a;
-	letter-spacing: 3px;
-	font-weight: 600;
-}
-
-@media (max-width: 500px) {
-	.book { padding: 1.5rem 1.2rem; }
-	h1 { font-size: 2.2rem; letter-spacing: 8px; }
-	.preface { padding: 1.2rem; }
-	.quote-item { padding: 0.5rem 1rem; }
-	.section-title h2 { font-size: 1.6rem; }
-	.editor-seal { justify-content: flex-start; }
-	body::before { font-size: 2.5rem; }
-	body::after { font-size: 2rem; }
-}
-
-.sprinkle {
-	color: #6aaed9;
-	font-size: 1rem;
-	letter-spacing: 4px;
-}
-.inline-quote {
-	font-style: italic;
-	color: #1f5a7a;
-}
-.emph {
-	background: #b8ddf5;
-	padding: 0 8px;
-	border-radius: 20px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCTI 神经-计算机人格测试</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+            padding: 40px 50px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #0f172a;
+            border-left: 6px solid #3b82f6;
+            padding-left: 16px;
+            margin-bottom: 8px;
+        }
+        .subhead {
+            color: #64748b;
+            margin-bottom: 32px;
+            font-size: 16px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 20px;
+        }
+        .question-group {
+            margin-bottom: 28px;
+            border-bottom: 1px dashed #e2e8f0;
+            padding-bottom: 20px;
+        }
+        .question-group:last-of-type {
+            border-bottom: none;
+        }
+        .dimension-tag {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #3b82f6;
+            background: #dbeafe;
+            padding: 2px 14px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        .q-item {
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid #cbd5e1;
+            transition: background 0.15s;
+        }
+        .q-item:hover {
+            background: #f1f5f9;
+        }
+        .q-text {
+            font-weight: 500;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .q-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 24px;
+        }
+        .q-options label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            color: #334155;
+        }
+        .q-options input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #3b82f6;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .actions {
+            margin-top: 32px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 36px;
+            border: none;
+            border-radius: 40px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+        }
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59,130,246,0.35);
+        }
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+        #result-area {
+            margin-top: 40px;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 32px;
+            display: none;
+        }
+        .result-block {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+        }
+        .result-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #0f172a;
+        }
+        .dimension-result {
+            margin-bottom: 20px;
+        }
+        .dimension-result:last-child {
+            margin-bottom: 0;
+        }
+        .dim-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .dim-label .left {
+            color: #3b82f6;
+        }
+        .dim-label .right {
+            color: #8b5cf6;
+        }
+        .bar-bg {
+            background: #e2e8f0;
+            height: 20px;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+        }
+        .bar-fill-left {
+            background: #3b82f6;
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 40px 0 0 40px;
+        }
+        .bar-fill-right {
+            background: #8b5cf6;
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 0 40px 40px 0;
+        }
+        .bar-center-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: rgba(255,255,255,0.6);
+            pointer-events: none;
+        }
+        .personality-box {
+            background: linear-gradient(135deg, #dbeafe, #ede9fe);
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-top: 20px;
+        }
+        .personality-code {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .personality-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 6px 0 12px;
+        }
+        .personality-desc {
+            font-size: 16px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            color: #1e293b;
+        }
+        .footnote {
+            margin-top: 16px;
+            font-size: 14px;
+            color: #64748b;
+            text-align: center;
+        }
+        .error-msg {
+            color: #dc2626;
+            font-size: 15px;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+        @media (max-width: 640px) {
+            .container {
+                padding: 20px 16px;
+            }
+            .q-options {
+                gap: 8px 16px;
+            }
+            .q-options label {
+                font-size: 14px;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="book">
+<div class="container">
+    <h1>🧠 NCTI 人格测试</h1>
+    <div class="subhead">
+        神经-计算机类型指标 · 共35题 · 请根据真实感受作答，没有中立选项
+    </div>
 
-<!-- 标题 + 编者 Xi -->
-<div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; margin-bottom: 0.2rem;">
-<h1 style="margin-bottom: 0;">胤 语</h1>
-<div class="editor-seal" style="margin-top: 0;">
-<span class="editor-line">编者 ·</span>
-<span class="seal-stamp"><i>Xi</i></span>
-</div>
-</div>
-<div class="subhead">江海不言 · 润物无声</div>
+    <div id="questions-container"></div>
 
-<!-- 代序 -->
-<div class="preface">
-<p><strong>代序 · 江海不言，润物无声</strong></p>
-<p>2025年11月6日，大家知道，赵胤老师因故不再教我们了。可以大胆地说，这将是我们高中生涯中发生最突然、影响最大的意外事件之一。它对九、十、十一班同学的影响不仅是感情上的，更是学习实践上的。赵老师离开后，在数学学习方法或思路上的变化，很快就会为人所感知到。同学们纷纷自发而难以抑制地表现出对赵老师的怀念，不少人都在那晚痛哭流涕。有关的朋友圈（至少八条）接连出现了，大家的微信状态里也写着各种感概万千的话。过剩的痛苦几乎把所有人笼罩了。</p>
-<p>既然赵老师教我们的时代已经结束，也是时候对其人其事做出评价了。他究竟是一个什么样的人呢？赵老师是一位优秀的教育工作者。他作为数学奥林匹克金牌教练和《你误解了奥数》作者的身份已经人尽皆知，人人都可从此发觉他超然绝俗的数学水平。另一方面，他对教育有着无上的责任感和使命感。遥想初三毕业前有同学采访“你认为学习的意义是什么”，当问到赵老师的时候，他的回答是：“可能是传承吧。”我们看到了一位教师面对自己事业时的崇高态度和思想觉悟，当时就在办公室中引发了一阵喝彩，而且他几年来的教学也反复印证了这一点。即便在他最忙碌的时候，他也尽全力保障教学质量，哪怕这是用他一天仅睡三四个小时的代价换来的。要想再找到这样一位老师，想必是十分困难的。</p>
-<p>赵老师是九、十、十一班同学的朋友。他非常关心大家的学习和生活，常常把同学叫到楼道里谈话。去安徽研学那几天里，他也挨个敲开男生宿舍门提醒我们早点睡觉。平曰里赵老师好跟人们开玩笑，课堂上时常能传来欢声笑语。等赵老师越来越忙了，有人觉得他状态大不如前，可也会看到他在课上被同学逗笑而感到欣慰，正因为他久违地露出了笑容。赵老师从来没有什么架子，从来不高高在上地与我们相处。我们发现他十年前的QQ文案后调侃了很久，他也没有生气。</p>
-<p>有时他看到同学在楼道踢球，还会加入进去踢上两脚。要想再找到这样一位朋友，想必也是十分困难的。赵老师已然成为我们心中的精神符号，他的形象已经深深的烙印进我们的头脑里——高大魁梧，戴着眼镜，有着长度可忽略不计的短发，说着一口老北京味方言，嗓门很大……很多人都可以惟妙惟肖地模仿出他讲话的语调。我仍能清楚地记得，在初三的中秋晚会上的“你比划我猜”环节，就有着一道以赵老师口头禅“这事就吹了”为题的题目；初中毕业典礼上出的话剧里的教师角色也参考了赵老师的形象，微电影里也出现了同学饰演的赵老师。可以预见的是，赵老师离开后，关于他的梗和对他的模仿在很长一段时间内都不会消失。这也就意味着，我们的心里会一直为赵老师保留一个位置，就好像他还在我们身边一样。</p>
-<p>“江海不言，润物无声。”赵老师正是这样的。他可能不善表达对同学们的喜爱，但他已经为了我们付出了几乎全部精力，远远超出了他的本职工作。他在学习上、精神上、思想上的奉献是不可估量的。这就是我们对他的评价。</p>
-<p>为了更好地纪念他，同学们自发地编纂了这本《胤语》，供大家欣赏、参考、学习。我们更希望大家能够凭此感受到赵老师仍坚定地在支持我们，尽快从悲伤中走出来，不辜负赵老师对我们的期望。让我们像赵老师所说的那样把数学搞得越来越好！祝福赵老师身体健康！向亲爱的赵胤敬礼！</p>
-<div class="signature">—— 耿乐涵 代表初三十七、十八班及高一九、十、十一班全体 书<br>2025年11月7曰</div>
-</div>
+    <div class="actions">
+        <button class="btn btn-primary" id="submitBtn">提交并查看结果</button>
+        <button class="btn btn-secondary" id="resetBtn">重新测试</button>
+    </div>
+    <div id="error-msg" class="error-msg"></div>
 
-<div class="divider-wave">· · ·</div>
-
-<!-- 希望篇 -->
-<div class="section">
-<div class="section-title">
-<h2>希望篇</h2>
-<span class="sub">· 学科素养 · 指引与教导</span>
-</div>
-<div class="quote-grid">
-<div class="quote-item"><span class="tag">胤曰</span>暑假后，希望你们都能变得才气逼人</div>
-<div class="quote-item"><span class="tag">生曰</span>12*16=192 <span class="highlight">·</span> <span class="tag">胤曰</span>cos仍需加强</div>
-<div class="quote-item"><span class="tag">胤曰</span>叮咣五四一顿算，delta<0，那这个事就吹了</div>
-<div class="quote-item"><span class="tag">胤曰</span>相较于《红楼梦》，《几何原本》才是精华</div>
-<div class="quote-item"><span class="tag">胤笑曰</span>这不cos题么</div>
-<div class="quote-item"><span class="tag">胤曰</span>一定要把这个弄得好一点</div>
-<div class="quote-item"><span class="tag">胤叹曰</span>你们的数学基础太弱了</div>
-<div class="quote-item"><span class="tag">胤曰</span>学数学真的可以让人变聪明的</div>
-</div>
+    <div id="result-area">
+        <div class="result-block">
+            <div class="result-title">📊 各维度倾向</div>
+            <div id="dimension-results"></div>
+        </div>
+        <div class="personality-box" id="personality-box">
+            <div class="personality-code" id="result-code"></div>
+            <div class="personality-name" id="result-name"></div>
+            <div class="personality-desc" id="result-desc"></div>
+        </div>
+        <div class="footnote">—— 结果基于你的选择生成，仅供参考 ——</div>
+    </div>
 </div>
 
-<!-- 天上篇 -->
-<div class="section">
-<div class="section-title">
-<h2>天上篇</h2>
-<span class="sub">· 道德修养 · 价值观念</span>
-</div>
-<div class="quote-grid">
-<div class="quote-item"><span class="tag">生曰</span>明日下雨，假否？ <span class="highlight">·</span> <span class="tag">胤曰</span>天上下刀子也得去学校啊</div>
-<div class="quote-item"><span class="tag">胤笑曰</span>你们这都什么素质</div>
-<div class="quote-item"><span class="tag">胤引曰</span>人，要么庸俗，要么孤独</div>
-<div class="quote-item"><span class="tag">胤曰</span>我从来不去体检，一去准能查出毛病</div>
-<div class="quote-item"><span class="tag">胤曰</span>睡那么多觉干什么</div>
-<div class="quote-item"><span class="tag">胤曰</span>才气逼人者，体瘦而神励也<br><span style="margin-left: 1.2rem; color:#2c6b8f;">问曰：师瘦否？</span><br><span style="margin-left: 1.2rem; color:#2c6b8f;">胤曰：区间无穷者，异也</span></div>
-<div class="quote-item"><span class="tag">胤曰</span>我的老师每天骑二八大杠往返学校。</div>
-</div>
-</div>
+<script>
+    // ========== 题目数据 ==========
+    const questions = [
+        // 维度1：简洁 ↔ 多维
+        { id:1, dim:1, text: "我喜欢同时处理多个任务，而不喜欢死磕一件事", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:2, dim:1, text: "我说话习惯直截了当，只说核心要点", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:3, dim:1, text: "我经常在同一时间冒出好几个毫不相关的念头", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:4, dim:1, text: "别人说话绕圈子时，我会明显感到不耐烦", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:5, dim:1, text: "我擅长在看起来完全不同的领域之间建立联系", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:6, dim:1, text: "一次只专注做一件事，让我觉得效率最高", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:7, dim:1, text: "我的思维经常像树状图一样向外发散，而不是走直线", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        // 维度2：灵动 ↔ 持久
+        { id:8, dim:2, text: "五天前发生的不愉快，我现在早就没感觉了", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:9, dim:2, text: "做重大决定时，我一定会参考过去的类似经历", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:10, dim:2, text: "我是一个翻篇很快的人，基本不记隔夜仇", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:11, dim:2, text: "过去的成败对我现在的选择影响非常大", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:12, dim:2, text: "我很少回顾昨天，更关注此刻正在发生什么", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:13, dim:2, text: "我相信“历史会重演”，所以长期主义很重要", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:14, dim:2, text: "我可以轻易放下一个坚持了很久的习惯", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        // 维度3：外排 ↔ 内驱
+        { id:15, dim:3, text: "心里不痛快时，我必须找人说出来才舒服", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:16, dim:3, text: "我习惯自己消化情绪，不喜欢让别人看出来", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:17, dim:3, text: "我的脾气向来是来得快去得也快", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:18, dim:3, text: "很多时候我内心翻江倒海，但表面完全不动声色", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:19, dim:3, text: "生气时我会直接让对方知道我的不满", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:20, dim:3, text: "我习惯在内心反复劝说自己来平息情绪", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:21, dim:3, text: "我的表情经常出卖我的真实心情", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        // 维度4：全面 ↔ 精巧
+        { id:22, dim:4, text: "在团队里，我会主动关注所有人的进度和状态", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:23, dim:4, text: "我更喜欢和少数几个人建立非常深的关系", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:24, dim:4, text: "我善于在各方之间传递信息，充当桥梁角色", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:25, dim:4, text: "我觉得社交太广是一种消耗，窄圈子更适合我", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:26, dim:4, text: "我习惯站在全局视角看问题，而不只是自己的领域", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:27, dim:4, text: "相比照顾所有人，我更愿意钻研自己擅长的一小块领域", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:28, dim:4, text: "我会刻意维护一个庞大的人脉网络", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        // 维度5：饱满 ↔ 节能
+        { id:29, dim:5, text: "我经常是先做了再说，不太会提前纠结代价", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:30, dim:5, text: "做重要选择之前，我会反复计算投入产出比", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:31, dim:5, text: "我信奉“机会不等人”，所以行动向来很快", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:32, dim:5, text: "我总是担心冲动决策会带来损失，所以会犹豫很久", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:33, dim:5, text: "我很少为“做过的事”后悔，更多是为“没做的事”后悔", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]},
+        { id:34, dim:5, text: "我习惯把所有可能的结果都算清楚，才肯迈出第一步", options: [
+            {label:"非常认同", score:5}, {label:"比较认同", score:3}, {label:"比较不认同", score:-3}, {label:"非常不认同", score:-5}
+        ]},
+        { id:35, dim:5, text: "我认为果断比深思熟虑更重要", options: [
+            {label:"非常认同", score:-5}, {label:"比较认同", score:-3}, {label:"比较不认同", score:3}, {label:"非常不认同", score:5}
+        ]}
+    ];
 
-<!-- 默默篇 -->
-<div class="section">
-<div class="section-title">
-<h2>默默篇</h2>
-<span class="sub">· 幽默 · 鼓舞 · 温情</span>
-</div>
-<div class="quote-grid">
-<div class="quote-item"><span class="tag">胤曰</span>默默爱着你的六月雪</div>
-<div class="quote-item"><span class="tag">胤曰</span>洗了19件衣服，累死哥了</div>
-<div class="quote-item"><span class="tag">胤曰</span>喜欢上一个人可以很快，忘记却很难！</div>
-<div class="quote-item"><span class="tag">胤曰</span>我的雨伞呢！？</div>
-<div class="quote-item"><span class="tag">胤曰</span>过年好啊！祝你及全家春节快乐，一切顺利！</div>
-<div class="quote-item"><span class="tag">胤曰</span>人人都能上130！</div>
-<div class="quote-block">
-<p><span class="tag">胤结曰</span> 咱们每次的考题都不简单，给分也比较吝啬，目的是高标准要求你们，让你们在困境中迸发出更强大的力量。我认为你们的高考数学都不应低于130分，部分同学更是具备140+甚至更高分的能力。高二多花点时间学好数学，争取明年一模就能顺利达标！长风破浪会有时，直挂云帆济沧海。</p>
-</div>
-</div>
-</div>
+    // ========== 32型人格数据（所有描述均使用模板字符串，引号安全） ==========
+    const typeData = {
+        "简洁-灵动-外排-全面-饱满": {
+            code: "急先锋",
+            desc: `这个人脑子里只有一件事——把眼前的事立刻搞定。说话快、走路快、做决定更快。开会时别人还在铺垫，他已经把方案拍在桌上了。天生觉得自己是领头的，走到哪儿都自动接过指挥权。情绪全写在脸上，不高兴马上就能看出来，但翻篇也快，不记隔夜仇。精力像用不完，闲下来就浑身难受。
+优势：危急时刻全靠他，没人敢拍板时他敢。
+死穴：太急，撞了南墙也不回头，而且说话太直容易伤人。
+像谁：战场上的连长，创业公司的暴躁CEO。`
+        },
+        "简洁-灵动-外排-全面-节能": {
+            code: "守门员",
+            desc: `跟急先锋一样反应快、看得准，但每次要传出去的时候都会多停一秒——“传给左边那个人合适吗？传给右边会不会更有用？”这一停，时机就过了。他非常在意“我做这件事到底值不值”，如果算不清楚收益，宁可不动。但他确实擅长串联别人，是团队里信息最灵通的人，只是经常因为犹豫被当成“不靠谱”。
+优势：因为他反复权衡，很少犯低级错误。
+死穴：错过最佳时机，被骂“优柔寡断”。
+像谁：优秀的守门员，扑救漂亮但出球犹豫。`
+        },
+        "简洁-灵动-外排-精巧-饱满": {
+            code: "独行侠",
+            desc: `单干型。一个人就是一支队伍，不喜欢被人管，也不喜欢管别人。遇到问题自己冲上去解决，干净利落，从不拖泥带水。说话直来直去，但圈子极小，只跟两三个人深交。精力旺盛，喜欢挑战高难度任务，觉得“自己搞定最省事”。
+优势：执行力极强，从不废话。
+死穴：不太会配合，容易把队友晾在一边。
+像谁：自由职业的技术大牛，拒绝坐班的硬核工程师。`
+        },
+        "简洁-灵动-外排-精巧-节能": {
+            code: "狙击手",
+            desc: `脑子转得飞快，一眼就能看到问题的关键。但每次扣扳机前都要反复算——风速、湿度、角度、打中了能得到什么、打不中怎么办。算着算着目标就跑了。他特别善于发现别人的漏洞，但自己的行动总是慢半拍，因为永远在评估“性价比”。
+优势：从不出臭棋，每一步都经过计算。
+死穴：算了半天不动手，被说“只想不做”。
+像谁：盘算很久才出手的棋手，永远在等最好时机的投资者。`
+        },
+        "简洁-灵动-内驱-全面-饱满": {
+            code: "定海针",
+            desc: `看起来没什么存在感，但所有人遇到大事都会找他商量。他不是不说话，是说出来的话都是想透了的。反应快但不急着表达，先听完所有人，再一句定音。他不需要外界的加油鼓劲，自己内部就有稳定的动力。不知不觉就成了团队的主心骨，大家觉得“有他在就安心”。
+优势：稳、准、有公信力。
+死穴：太能扛，身边的人不知道他也累。
+像谁：球队里的老队长，话不多但服众。`
+        },
+        "简洁-灵动-内驱-全面-节能": {
+            code: "守夜人",
+            desc: `他看到了今晚可能会出什么事，但他会犹豫——要不要喊醒所有人？万一没事呢？喊了会不会白费力气？他总是在“该不该出手”之间反复横跳。他是那种操心最多但动作最小的人，心里装着一整张风险地图，但嘴上只说“没事”。
+优势：极其敏锐，防患于未然。
+死穴：因为犹豫而没预警，出事后又自责。
+像谁：值夜班的保安，看到了黑影但不敢开灯。`
+        },
+        "简洁-灵动-内驱-精巧-饱满": {
+            code: "刺客",
+            desc: `精准、安静、致命。他不说废话，不搞情绪，只做“该做的事”。圈子极小，但一旦认准的人，他会全力保护。执行力恐怖，答应的事必做到，而且永远做得比预期好。别人觉得他不近人情，但他只是把感情放在行动里，不在嘴上。
+优势：极度可靠，从不掉链子。
+死穴：太冷，让人不敢靠近。
+像谁：特种兵，或者话少但靠谱的急诊科医生。`
+        },
+        "简洁-灵动-内驱-精巧-节能": {
+            code: "隐士",
+            desc: `什么都知道，但觉得“知道有什么用呢”。脑子转得快，但没什么事能真正让他动手。他在乎的东西很少，对大多数事都是一种“算了”的态度。他活得特别轻，像没什么能真正压住他，但也像没什么能真正点燃他。
+优势：超脱，不内耗。
+死穴：虚无感，觉得一切都没意义。
+像谁：住在山里的前高管，或者大学里什么都懂但不发论文的教授。`
+        },
+        "简洁-持久-外排-全面-饱满": {
+            code: "老船长",
+            desc: `经验就是他的底气。他见过太多风浪了，所以你跟他讲什么新东西，他第一反应是“我当年遇到过类似的”。嗓门大、脾气直，但心里装着整个团队。他做决定不是靠分析，是靠“直觉”——其实就是过去无数次的经历堆出来的。大家愿意跟着他，因为他真的开过船。
+优势：经验值满格，极少翻船。
+死穴：太相信老经验，新东西来了不愿学。
+像谁：干了三十年的老工程师，或者家族企业里的老厂长。`
+        },
+        "简洁-持久-外排-全面-节能": {
+            code: "档案员",
+            desc: `脑子里是一座图书馆，什么资料都有。但他每次往外拿都要反复翻看，确认页码对不对、出处准不准。他的建议从来都是靠谱的，但就是太慢了。他也知道这一点，所以更焦虑——越怕出错越慢。他是团队里那个“其实都懂但不敢说全”的人。
+优势：不出错，准确率高。
+死穴：慢，错过时机。
+像谁：档案馆的管理员，或者不敢签字的法务。`
+        },
+        "简洁-持久-外排-精巧-饱满": {
+            code: "守碑人",
+            desc: `认准了一件事就不带动的。他对自己的信念像对墓碑一样严肃，谁碰他跟谁急。他不愿意妥协，因为他觉得妥协就是背叛自己。他的圈子很小，但对圈子里的人极度忠诚。他不怕苦，怕的是“变”。
+优势：极其坚定，不可动摇。
+死穴：太固执，听不进劝。
+像谁：坚守老手艺的匠人，或者退伍后只穿军装的老兵。`
+        },
+        "简洁-持久-外排-精巧-节能": {
+            code: "说书人",
+            desc: `他心里有一堆好故事，都是真的，都是他经历过的。但他每次想跟人讲的时候，都会想：“人家想听吗？我讲这个是不是显得老土？”于是很多故事就烂在了肚子里。他念旧，但不敢表现得太念旧，怕被嫌弃。
+优势：真实、深情、有内容。
+死穴：不敢分享，越来越孤。
+像谁：退休的老教师，满肚子故事却没人听。`
+        },
+        "简洁-持久-内驱-全面-饱满": {
+            code: "军师",
+            desc: `他看事情从来只看三步以后。你还在讨论这个月怎么办，他已经想到明年这时候了。他的优势是历史的规律装在心里，所以预测特别准。但他不太爱解释，只说“按我说的做就行”，让人跟他合作时有点憋屈。
+优势：远见卓识，算无遗策。
+死穴：太孤高，队友跟不上。
+像谁：古装剧里的谋士，或者战略顾问。`
+        },
+        "简洁-持久-内驱-全面-节能": {
+            code: "掌印官",
+            desc: `他知道的秘密太多了。公司里谁是谁的关系、上个月的失败是谁的责任、这次晋升谁才是真候选人——他都清楚。但他不动。他一直在算“现在亮牌还是再等等”，结果等到牌过期了都没亮。他活得像一个手握钥匙却不敢开门的看门人。
+优势：安全，不惹事。
+死穴：过于保守，丧失机会。
+像谁：老板的亲信秘书，知道一切但不发一言。`
+        },
+        "简洁-持久-内驱-精巧-饱满": {
+            code: "苦行僧",
+            desc: `信仰就是他的操作系统。他可以为了一个目标吃所有的苦、扛所有的罪、忍受所有的孤独。他不怕身体累，怕的是“信的东西错了”。他的生活极其简单，不需要社交，不需要享受，只需要往前走。像一块石头，水冲不走，火烧不裂。
+优势：极致的耐力。
+死穴：一旦信念崩塌，整个人变砖。
+像谁：宗教中的苦修者，或者马拉松跑到最后的那个。`
+        },
+        "简洁-持久-内驱-精巧-节能": {
+            code: "守墓人",
+            desc: `他活在过去。不是不愿意走出来，是觉得“走出来就什么都没有了”。他守着一段关系、一个身份、一段记忆，哪怕那些东西已经死了。他不想打扰任何人，也不想被任何人打扰。他觉得自己的一生就在那个“墓碑”旁边结束了。
+优势：深情，忠于自己的过去。
+死穴：拒绝新的可能性。
+像谁：丧偶后不再婚的老人，或者守着倒闭工厂的前厂长。`
+        },
+        "多维-灵动-外排-全面-饱满": {
+            code: "点火者",
+            desc: `这个人走到哪儿，哪儿就热闹。他脑子里永远在冒新想法，一个还没说完下一个就蹦出来了。他说干就干，并且能把周围的人也煽动起来。他从来不缺人跟他一起玩，因为他自己就是磁场。但他留下的烂尾工程也最多——点完火，他就去看下一堆柴了。
+优势：感染力爆棚，团队灵魂。
+死穴：虎头蛇尾，不落地。
+像谁：创业公司的创始人，或者天天组局但从不买单的那个。`
+        },
+        "多维-灵动-外排-全面-节能": {
+            code: "策展人",
+            desc: `他手上有一堆好东西——想法、资源、人脉。但他每次往外拿都要精挑细选，想“这个适合给谁”“那个能换什么”。他像一个策展人，所有展品都很好，但挂哪幅画、怎么排列，他要犹豫很久。所以他的好东西经常烂在自己手里。
+优势：品味好、判断准。
+死穴：过度筹划，错失先机。
+像谁：画廊老板，或者手里有大把资源但不敢动的项目经理。`
+        },
+        "多维-灵动-外排-精巧-饱满": {
+            code: "野马",
+            desc: `没人管得住他。他的想法是天马行空的，行动是随性的。他讨厌规则、讨厌汇报、讨厌“别人都这么做”。他只在感兴趣的事情上拼命，不感兴趣的事情连碰都不碰。他的圈子极窄，但圈子里的人都觉得他牛逼。
+优势：天赋型选手，总能走别人的路。
+死穴：无法被管理，无法被预测。
+像谁：摇滚乐队主唱，或者不接甲方的自由设计师。`
+        },
+        "多维-灵动-外排-精巧-节能": {
+            code: "烟花",
+            desc: `他经常在一瞬间说出金句、想到绝妙的点子，然后——没了。因为他在放出这个念头之前，已经先算了一遍“这个想法能不能变现”“别人会不会认可”，算完觉得不划算，就收回去。别人永远只看到他的余光，看不到他脑内的大爆炸。
+优势：灵感量大，质量高。
+死穴：从不执行，成了“有才华但没作品”的人。
+像谁：写了半本小说没出版的人，或者脑子全是创意但不出方案的设计师。`
+        },
+        "多维-灵动-内驱-全面-饱满": {
+            code: "操盘手",
+            desc: `他表面看起来随和，甚至有点笑眯眯的，但他心里那张棋盘已经铺开了。他同时关注所有人的动向，每件事在他那里都有实时评分。他从不慌，因为他已经把每一步都算好了。他掌握全局但不显山露水，是真正的幕后玩家。
+优势：掌控力极强。
+死穴：表里不一，久了容易精神分裂。
+像谁：大型公司的COO，或者牌桌上不露声色的高手。`
+        },
+        "多维-灵动-内驱-全面-节能": {
+            code: "蜘蛛",
+            desc: `他织了很大一张网，网上的每一条丝都代表一条信息或一个人脉。他安静地待在网上，感受到每一丝震动——但他不急着收网。他总在想“现在收是不是最佳时机”“猎物够大吗”，结果经常让猎物跑了。他织网的能力一流，收网的能力九流。
+优势：信息网络极其精密。
+死穴：决策瘫痪。
+像谁：情报分析师，或者总在观望的投资者。`
+        },
+        "多维-灵动-内驱-精巧-饱满": {
+            code: "造梦人",
+            desc: `他脑子里有一个完整的世界，有地图、有气候、有人物故事。现实世界对他来说只是“待机界面”。他能沉浸在自己的世界里好几天不出来，并且乐在其中。他不需要太多社交，因为他的世界已经很满了。他是别人眼里的怪人，但他是自己的神。
+优势：创造力惊人，自给自足。
+死穴：严重脱离现实。
+像谁：科幻小说家，或者独立游戏开发者。`
+        },
+        "多维-灵动-内驱-精巧-节能": {
+            code: "漂流者",
+            desc: `他觉得这个世界不太属于他。他有很强的直觉，经常能感受到别人感受不到的波动，但他觉得“那又怎样呢”。他一直在漂泊，看到过很多岸，但划过去太累了，算了吧。他活得像个旁观者，温柔疏离，不哭不闹。
+优势：通透，不执著。
+死穴：无法锚定在任何一件事上。
+像谁：旅居多年的背包客，或者禅修营里的常驻学员。`
+        },
+        "多维-持久-外排-全面-饱满": {
+            code: "演说家",
+            desc: `他讲的每一个故事都能抓住人心，因为他真的经历过，或者真的研究透了。他站在人群中央，用过去照亮现在。他有把复杂历史变成热血叙事的能力，大家愿意跟着他走。但他偶尔会为了故事更好听而美化细节——他自己觉得那是“提炼”，别人觉得那是“撒谎”。
+优势：极强的感染力。
+死穴：可信度偶尔打折。
+像谁：布道者，或者畅销书作家。`
+        },
+        "多维-持久-外排-全面-节能": {
+            code: "留声机",
+            desc: `他记得每一个美好的瞬间，并且愿意反复播放给别人听。但他每次播放前都要算——“对方爱听吗？我现在说这个合不合适？”所以他的温暖总是半遮半掩的。他活得像个过时的留声机，唱针还在转，但声音越来越小。
+优势：深情、细腻。
+死穴：怕被拒绝，渐渐沉默。
+像谁：爱翻老照片但不敢发朋友圈的人。`
+        },
+        "多维-持久-外排-精巧-饱满": {
+            code: "筑梦师",
+            desc: `他有一个终极理想，蓝图已经画好了。他不跟任何人商量，因为他觉得没人能懂。他一块砖一块砖地自己砌，不管刮风下雨。他不惜代价，不怕孤独，不怕饿死。他是那种“到死也要把梦建完”的人。
+优势：不可阻挡的执行力。
+死穴：完全不接地气，可能连饭都忘了吃。
+像谁：造火箭的民间科学家，或者一生只拍一部电影的艺术片导演。`
+        },
+        "多维-持久-外排-精巧-节能": {
+            code: "收藏家",
+            desc: `他什么都舍不得扔——旧车票、旧情书、旧手机。因为每一件东西后面都有一整个记忆世界。但他也因此在整理旧物时反复纠结：扔？不扔？扔掉是不是就失去了那段日子？他囤积的不是物品，是不敢放手的过去。
+优势：重情重义。
+死穴：被过去压垮，无法轻装前行。
+像谁：有囤积癖的老人，或者总在翻前任朋友圈的人。`
+        },
+        "多维-持久-内驱-全面-饱满": {
+            code: "预言者",
+            desc: `他看历史不是看故事，是看规律。他能从一百年前的某件事推出现在的结果，所以他的预测总是准的。但他话只说一半，因为他觉得“能懂的自然懂”，导致别人把他当神棍。他的远见是他的武器，也是他的诅咒——因为他总是对的，所以没人愿意跟他争论，也意味着没有人真正靠近他。
+优势：极其深刻的洞察力。
+死穴：孤芳自赏，与世隔绝。
+像谁：历史学家，或者靠数据预测市场的经济学家。`
+        },
+        "多维-持久-内驱-全面-节能": {
+            code: "观棋者",
+            desc: `他坐在棋盘旁边看了三十年，每一招都看懂了，每一步的结果都算清了。但他不落子。他觉得自己“看”就够了，动手太累，而且万一输了更亏。他是那种“我早知道会这样”的人——他真的知道，但就是不说、不动、不参与。
+优势：心如明镜。
+死穴：彻底沦为旁观者。
+像谁：退休后不再做任何决策的老领导。`
+        },
+        "多维-持久-内驱-精巧-饱满": {
+            code: "孤王",
+            desc: `他自己就是一个王国。他有自己的价值观、自己的审美、自己的规则。他不需要外面的认可，因为他自己就是最高权威。他的王国很小，但严丝合缝，谁也进不来。他活得像个国王，但没有臣民，也不需要臣民。
+优势：极端自洽，内心强大。
+死穴：拒绝任何外来的东西，最终成为孤岛。
+像谁：隐居的诗人，或者不接商业订单的顶级匠人。`
+        },
+        "多维-持久-内驱-精巧-节能": {
+            code: "归零者",
+            desc: `他站在时间线的尽头往回看，觉得一切都是尘埃。所有的努力、感情、成就，最后都会消失。所以他做什么都提不起劲——反正都要归零。他不是悲观，他是真的觉得“算了”。他活着，但像已经签了离开协议。
+优势：不争不抢，极致的平静。
+死穴：彻底丧失动力。
+像谁：看透生死的垂暮者，或者存在主义哲学爱好者。`
+        }
+    };
 
-<div class="divider-wave">· · ·</div>
+    // 维度标签
+    const dimLabels = [
+        { left: "简洁", right: "多维", leftShort: "简", rightShort: "多" },
+        { left: "灵动", right: "持久", leftShort: "灵", rightShort: "持" },
+        { left: "外排", right: "内驱", leftShort: "外", rightShort: "内" },
+        { left: "全面", right: "精巧", leftShort: "全", rightShort: "精" },
+        { left: "饱满", right: "节能", leftShort: "饱", rightShort: "节" }
+    ];
 
-<!-- 编者结语 + 编者 Xi -->
-<div class="footer-note">
-<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 0.6rem;">
-<p style="font-size: 1.2rem; font-weight: 700; letter-spacing: 3px; margin: 0; color:#1f5a7a;"><strong>编者结语</strong></p>
-<div class="editor-seal" style="margin-top: 0;">
-<span class="editor-line">编者 ·</span>
-<span class="seal-stamp"><i>Xi</i></span>
-</div>
-</div>
-<p>离别总在不经意间牵动心绪，纯真友谊最怕岁月流转、世事变迁。此篇《胤语》，愿为往事留痕，将点滴回忆凝于笔墨之间。赵胤老师的淳淳教导与深切关怀，早已深深镌刻在我们心中，如烟往事难散，温情历久弥新。</p>
-<p>也许我们不必沉湎于哀伤。离别，是为了更美好的启程；暂停，是为了更崇高的奔赴。愿我们始终铭记来路，亦不忘眺望前方，将“胤语”精神传承发扬，敢闯敢试、勇为人先，不负身为赵胤学子的荣光与使命！</p>
-<div class="signature-block">
-—— 赵胤学子 · 2025年11月8日
-<small>谨以此册纪念我们永远的赵胤老师</small>
-</div>
-</div>
+    // ========== 渲染题目 ==========
+    function renderQuestions() {
+        const container = document.getElementById('questions-container');
+        let html = '';
+        for (let d = 1; d <= 5; d++) {
+            const qs = questions.filter(q => q.dim === d);
+            const label = dimLabels[d-1];
+            html += `<div class="question-group"><div class="dimension-tag">维度 ${d}：${label.left} ↔ ${label.right}</div>`;
+            qs.forEach(q => {
+                const id = 'q' + q.id;
+                html += `<div class="q-item"><span class="q-text">${q.id}. ${q.text}</span><div class="q-options">`;
+                q.options.forEach(opt => {
+                    const val = opt.score;
+                    html += `<label><input type="radio" name="${id}" value="${val}" required> ${opt.label}</label>`;
+                });
+                html += `</div></div>`;
+            });
+            html += `</div>`;
+        }
+        container.innerHTML = html;
+    }
 
-<div class="meta-date">
-《胤语》· 江海不言 润物无声 · 2025
-</div>
+    // ========== 提交逻辑 ==========
+    document.getElementById('submitBtn').addEventListener('click', function() {
+        const errorMsg = document.getElementById('error-msg');
+        errorMsg.textContent = '';
 
-</div>
+        let allAnswered = true;
+        let firstUnanswered = null;
+        questions.forEach(q => {
+            const name = 'q' + q.id;
+            const checked = document.querySelector(`input[name="${name}"]:checked`);
+            if (!checked) {
+                allAnswered = false;
+                if (!firstUnanswered) firstUnanswered = q.id;
+            }
+        });
+
+        if (!allAnswered) {
+            errorMsg.textContent = `⚠️ 还有题目未作答（如第 ${firstUnanswered} 题），请完成所有题目。`;
+            const firstEl = document.querySelector(`input[name="q${firstUnanswered}"]`);
+            if (firstEl) {
+                firstEl.closest('.q-item').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstEl.closest('.q-item').style.borderLeftColor = '#dc2626';
+                setTimeout(() => { firstEl.closest('.q-item').style.borderLeftColor = ''; }, 2000);
+            }
+            return;
+        }
+
+        const dimScores = [0,0,0,0,0];
+        questions.forEach(q => {
+            const name = 'q' + q.id;
+            const checked = document.querySelector(`input[name="${name}"]:checked`);
+            if (checked) {
+                const score = parseInt(checked.value);
+                dimScores[q.dim] += score;
+            }
+        });
+
+        showResults(dimScores);
+    });
+
+    // ========== 显示结果 ==========
+    function showResults(scores) {
+        const resultArea = document.getElementById('result-area');
+        resultArea.style.display = 'block';
+
+        const dimResults = document.getElementById('dimension-results');
+        let html = '';
+        const maxScore = 35;
+        const chosen = [];
+
+        for (let i = 0; i < 5; i++) {
+            const s = scores[i+1];
+            const label = dimLabels[i];
+            let leftPct = 0, rightPct = 0;
+            if (s > 0) {
+                rightPct = (s / maxScore) * 100;
+                leftPct = 100 - rightPct;
+                chosen.push(label.right);
+            } else if (s < 0) {
+                leftPct = (Math.abs(s) / maxScore) * 100;
+                rightPct = 100 - leftPct;
+                chosen.push(label.left);
+            } else {
+                leftPct = 50;
+                rightPct = 50;
+                chosen.push(label.left);
+            }
+            leftPct = Math.round(leftPct * 10) / 10;
+            rightPct = Math.round(rightPct * 10) / 10;
+
+            html += `<div class="dimension-result">
+                <div class="dim-label">
+                    <span class="left">${label.left} ${leftPct}%</span>
+                    <span class="right">${label.right} ${rightPct}%</span>
+                </div>
+                <div class="bar-bg">
+                    <div class="bar-fill-left" style="width: ${leftPct}%;"></div>
+                    <div class="bar-fill-right" style="width: ${rightPct}%;"></div>
+                    <div class="bar-center-line"></div>
+                </div>
+                <div style="font-size:13px; color:#64748b; margin-top:2px;">得分：${s} 分</div>
+            </div>`;
+        }
+        dimResults.innerHTML = html;
+
+        const typeKey = chosen.join('-');
+        const typeInfo = typeData[typeKey];
+
+        if (typeInfo) {
+            document.getElementById('result-code').textContent = typeKey.replace(/-/g, ' · ');
+            document.getElementById('result-name').textContent = typeInfo.code;
+            document.getElementById('result-desc').textContent = typeInfo.desc;
+        } else {
+            document.getElementById('result-code').textContent = typeKey.replace(/-/g, ' · ');
+            document.getElementById('result-name').textContent = '均衡型（多维倾向不显著）';
+            document.getElementById('result-desc').textContent = '你的各项维度倾向较为均衡，可能在不同情境下表现出不同的特质。建议结合具体情境进一步探索。';
+        }
+
+        resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ========== 重置 ==========
+    document.getElementById('resetBtn').addEventListener('click', function() {
+        document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+        document.getElementById('result-area').style.display = 'none';
+        document.getElementById('error-msg').textContent = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    renderQuestions();
+</script>
 </body>
 </html>
